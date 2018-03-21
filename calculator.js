@@ -67,7 +67,106 @@ btndivide.addEventListener('click', () => display.textContent += '/');
 btnclear = document.querySelector('#clear');
 btnclear.addEventListener('click', () => display.textContent = '');
 
+
 btnresult = document.querySelector('#result')
-btnresult.addEventListener('click', () => display.textContent = eval(display.textContent))
+btnresult.addEventListener('click', () => display.textContent = simpleEval(display.textContent.split(/([\+\-\*\/])/g)))
+
+function simpleEval(anArray) {
+    console.log(anArray)
+    
+    if(anArray.length==1) return anArray[0]
+
+    if(anArray.includes('*')){
+        leftSide = anArray.slice(0,anArray.indexOf('\*')-1)
+        rightSide = anArray.slice(anArray.indexOf('\*')+2)
+        tempResult = (anArray[anArray.indexOf('\*')-1] * anArray[anArray.indexOf('\*')+1]).toString()
+
+        newArray = leftSide.concat(tempResult).concat(rightSide)
+
+        return simpleEval(newArray)
+    
+    }else if(anArray.includes('/')){
+        leftSide = anArray.slice(0,anArray.indexOf('\/')-1)
+        rightSide = anArray.slice(anArray.indexOf('\/')+2)
+        tempResult = (anArray[anArray.indexOf('\/')-1] / anArray[anArray.indexOf('\/')+1]).toString()
+
+        newArray = leftSide.concat(tempResult).concat(rightSide)
+
+        return simpleEval(newArray)
+
+    
+    }else if(anArray.includes('+')){
+        leftSide = anArray.slice(0,anArray.indexOf('\+')-1)
+        rightSide = anArray.slice(anArray.indexOf('\+')+2)
+        tempResult = (Number(anArray[anArray.indexOf('\+')-1]) + Number(anArray[anArray.indexOf('\+')+1])).toString()
+
+        newArray = leftSide.concat(tempResult).concat(rightSide)
+
+        return simpleEval(newArray)
+    
+    }else if(anArray.includes('-')){
+        leftSide = anArray.slice(0,anArray.indexOf('\-')-1)
+        rightSide = anArray.slice(anArray.indexOf('\-')+2)
+        tempResult = (anArray[anArray.indexOf('\-')-1] - anArray[anArray.indexOf('\-')+1]).toString()
+
+        newArray = leftSide.concat(tempResult).concat(rightSide)
+
+        return simpleEval(newArray)
+    }        
+}
 
 
+function myReduce(anArray,anOperator){
+    leftSide = anArray.slice(0,anArray.indexOf('\\'+anOperator)-1)
+    rightSide = anArray.slice(anArray.indexOf('\\'+anOperator)+2)
+    tempResult = (Number(anArray[anArray.indexOf('\\'+anOperator)-1]) + Number(anArray[anArray.indexOf('\\'+anOperator)+1])).toString()
+
+    newArray = leftSide.concat(tempResult).concat(rightSide)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// console.log('leftside: ')
+// console.log(leftSide)
+// console.log('rightside: ')
+// console.log(rightSide)
+// console.log(tempResult)
+// console.log('newarray: ')
+// console.log(newArray)
+
+
+
+
+
+
+
+
+
+
+// function myinsert(anArray,index, value) {
+//     if(index==0){
+//         anArray.unshift(value)
+//         return anArray
+//     } else {
+//         return [anArray[0]].concat(myinsert(anArray,index-1,value))
+//     }
+// }
